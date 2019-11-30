@@ -72,9 +72,10 @@ class DenseLayer(BaseLayer):
 
         # YOUR CODE STARTS HERE (1)
 
-        TODO = np.add(np.dot(x, self.w), self.b) # oi = x.wi + bi
-
-        output =  TODO
+        # print("b shape: ", self.b.shape)
+        # print("dot shape: ",np.dot(x, self.w).shape)
+        output = np.dot(x, self.w) + self.b # oi = x.wi + bi
+        # print("pass")
         
         # YOUR CODE ENDS HERE (1)
         
@@ -105,7 +106,8 @@ class DenseLayer(BaseLayer):
         # YOUR CODE STARTS HERE (2)
         self.dw = np.dot(np.transpose(self._input_data), self._output_error_gradient) # _input_data = x
 
-        self.db = np.dot(1, self._output_error_gradient)
+        # self.db = np.dot(self._output_error_gradient, 1)
+        self.db = np.sum(self._output_error_gradient, axis=0, keepdims=True)
 
         self._input_error_gradient = np.dot(self._output_error_gradient, np.transpose(self.w))
 
